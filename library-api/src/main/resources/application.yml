@@ -1,0 +1,23 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: 图书管理系统
+  datasource:
+    url: jdbc:mysql://localhost:3306/library?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    username: root
+    password: xieyun520
+    driver-class-name: com.mysql.jdbc.Driver
+#指定mybatis映射的xml文件
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+# 转化日期格式
+jackson:
+  time-zone: GMT+8
+  date-format: yyyy-MM-dd HH:mm:ss
+
+# 打印sql日志
+logging:
+  level:
+    com.springboot.mybatis.mapper: debug
+

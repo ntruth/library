@@ -1,0 +1,250 @@
+<style lang="less">
+@import 'src/style/weui.less';
+page{
+  background-color: #F8F8F8;
+  font-size: 16px;
+}
+.page__hd {
+  padding: 40px;
+  
+}
+.page__bd {
+  padding-bottom: 40px;
+}
+.page__bd_spacing {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.page__ft{
+  padding-bottom: 10px;
+  text-align: center;
+}
+.page__title {
+  text-align: left;
+  font-size: 20px;
+  font-weight: 400;
+}
+.page__desc {
+  margin-top: 5px;
+  color: #888888;
+  text-align: left;
+  font-size: 14px;
+}
+
+
+.book-list {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  box-sizing: border-box;
+  margin-top: 20rpx;
+  background-color: #fff;
+  height: 280rpx;
+}
+
+.book-image {
+  flex: 0 0 32%;
+  /* box-sizing: border-box;
+  min-height: 280rpx; */
+  height: 280rpx;
+}
+
+.book-image image {
+  margin-top: 4rpx;
+  height: 272rpx;
+  width: 272rpx;
+}
+
+.book-info {
+  background-color: #fff;
+  flex: 0 0 66%;
+  margin-left: 20rpx;
+}
+
+.book-info-style {
+  height: 280rpx;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.book-info-style view {
+  font-size: 28rpx;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.line {
+  width: 100%;
+  border: 1px solid #eee;
+}
+
+
+uploadWrap{
+  height:160rpx; 
+  width:100%; 
+  display: flex; 
+  display: -webkit-box; 
+  flex-direction: column;
+}
+
+.upload_Item{
+   width: 160rpx; 
+   height: 160rpx;  
+   flex: 1;
+}
+
+.upload_Item_img{
+   width: 160rpx; 
+   height: 160rpx;
+}
+
+
+</style>
+
+
+<template>
+  <view class="page__bd">
+    <view scroll-y="true">
+      <view class="weui-search-bar float">
+        <view class="weui-search-bar__form">
+          <view class="weui-search-bar__box">
+            <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
+            <input type="text" class="weui-search-bar__input" placeholder="搜索书籍📚" value="{{inputVal}}" focus="{{inputShowed}}" bindinput="inputTyping"
+            />
+            <view class="weui-icon-clear" wx:if="{{inputVal.length > 0}}" bindtap="clearInput">
+              <icon type="clear" size="14"></icon>
+            </view>
+          </view>
+          <label class="weui-search-bar__label" hidden="{{inputShowed}}" bindtap="showInput">
+                <icon class="weui-icon-search" type="search" size="14"></icon>
+                <view class="weui-search-bar__text">搜索书籍📚</view>
+            </label>
+        </view>
+      <view class="weui-search-bar__cancel-btn" hidden="{{!inputShowed}}" bindtap="hideInput">取消</view>
+    </view>
+
+
+    <swiper indicator-dots="{{indicatorDots}}" 
+        autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="true"> 
+      <block wx:for="{{arr}}"> 
+        <swiper-item> 
+            <image src="{{item}}" class="slide-image" width="355" height="150"/> 
+        </swiper-item> 
+      </block> 
+    </swiper>
+
+  
+    
+    <view class="weui-panel__bd">
+        <view class="weui-panel__hd">馆藏</view>       
+        <repeat class="book-list" for="{{ bookList }}" key="id" index="index" item="item" >
+          <navigator url="" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+
+            <view class="book-image">
+              <image class="weui-media-box__thumb" src="{{item.image}}" />
+            </view>
+
+            <view class="book-info">
+              <view class="book-info-style">
+                <view class="weui-media-box__title">{{item.name}}</view>
+                <view class="weui-media-box__title">作者:{{item.author}}\n</view>
+                <view>位置:{{item.position}}\n</view>
+                <view>出版信息:{{item.publisher}}\n</view>
+                <view>可借数量:{{item.qty}}\n</view>
+              </view>
+            </view>
+          </navigator>
+        </repeat>
+      </view>
+    </view>
+  </view>
+
+</template>
+
+<script>
+  import wepy from 'wepy'
+
+  export default class Index extends wepy.page {
+    config = {
+      'navigationBarTitleText': '图书管理系统'
+    }
+    // 可用于页面模板绑定的数据
+    data = {
+      mode: 'scaleToFill',
+      arr: [],
+      indicatorDots: true,
+      autoplay: true,
+      interval: 2000,
+      duration: 1000,
+
+      inputShowed: false,
+      inputVal: '',
+  
+      adUrl: 'https://cdncdn.qilinet.cn/love_affairs_4x.jpg',
+  
+      bookList: [
+        {
+          name: 'Thinking in Java',
+          author: 'Bruce Eckel',
+          image: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1555254343651&di=9c79a5ca87be2e3da593e7d7e2f8a21b&imgtype=0&src=http%3A%2F%2Fg-search4.alicdn.com%2Fbao%2Fuploaded%2Fg-search1.alicdn.com%2Fbao%2Fuploaded%2Fi1%2F1688600206%2FTB2X3wkipXXXXajXpXXXXXXXXXX_%2521%25211688600206.png',
+          position: '10:12:12',
+          publisher: '浙江万里学院出版社',
+          qty: 5
+        }
+      ]
+    }
+
+    onLoad() {
+      var array = this.data.arr
+      for (let i = 1; i <= 3; i++) {
+        array.push('https://cdncdn.qilinet.cn/love_affairs_4x.jpg')
+      }
+  
+      this.setData({arr: array})
+    }
+  
+    onShow() {
+  
+    }
+  
+    runMarquee() {
+      var that = this
+      var interval = setInterval(function () {
+        // 文字一直移动到末端
+        if (-that.data.marqueeDistance < that.data.length) {
+          this.marqueeDistance = that.data.marqueeDistance - that.data.marqueePace
+        } else {
+          clearInterval(interval)
+          this.marqueeDistance = that.data.windowWidth
+          that.runMarquee()
+        }
+      }, that.data.interval)
+    }
+
+    inputChange(e) {
+      this.data.inputVal = e.detail.value
+    }
+
+    showInput() {
+      this.inputShowed = true
+
+      console.log(this.inputShowed + '')
+    }
+    hideInput() {
+      this.inputVal = ''
+      this.inputShowed = false
+    }
+    clearInput() {
+      this.inputVal = ''
+    }
+  
+    inputTyping(e) {
+      // 调用接口
+      console.log(e.detail.value)
+    }
+  }
+</script>

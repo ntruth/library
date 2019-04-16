@@ -1,0 +1,17 @@
+{
+	"description": "图书管理系统",
+	"setting": {
+		"urlCheck": false,
+		"es6": false,
+		"postcss": false,
+		"minified": false,
+		"newFeature": true,
+		"autoAudits": false
+	},
+	"compileType": "miniprogram",
+	"appid": "wxef3dfa9e04a0bc68",
+	"projectname": "library",
+	"miniprogramRoot": "dist/",
+	"libVersion": "2.6.5",
+	"condition": {}
+}
